@@ -11,16 +11,18 @@ app.secret_key = os.urandom(24)
 swagger = Swagger(app)
 CORS(app, resources= { r"/*": {"origins": "*"} })
 
-# COnfiguración de la base de datos Mongo y su conección
+# Configuración de la base de datos Mongo y su conección
 #app.config['MONGO_URI'] = ''
 #mongo = PyMongo(app)
 
 
 # Definiciones de rutas de los blueprints
 #from nplrut.routes.routes import routes_app
+from nplrut.descarga_archivos.descarga_archivos import descarga_archivos_micro_service
 
 # Instancias del Blueprint
 #app.register_blueprint(routes_app)
+app.register_blueprint(descarga_archivos_micro_service)
 
 #Esto permite hacer pruebas con HTTP (Solo usar en local)
 #os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
