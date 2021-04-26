@@ -130,3 +130,6 @@ dmypy.json
 
 # Python Subsistem
 NLP-VE/
+
+# Configurations file
+config.py
