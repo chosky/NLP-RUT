@@ -6,10 +6,10 @@ from flask import Blueprint
 from werkzeug.utils import secure_filename
 import json, os
 
-from nplrut import blob_service, container
 from nplrut.descarga_archivos.validaciones_archivo import validaciones_archivo
 from nplrut.descarga_archivos.validaciones_seguridad_url import validaciones_seguridad
 from nplrut.descarga_archivos.validaciones_url import validaciones_url
+from nplrut.carga_archivos_blob_storage.carga_archivos_blob_storage import carga_archivos_blob
 
 descarga_archivos_micro_service = Blueprint("descarga_archivos_micro_service", __name__)
 
@@ -44,20 +44,3 @@ def descarga_archivos_url():
         "mensaje": ""
     }
     return jsonify(True)
-
-
-def carga_archivos_blob(archivo_rut, nombre_archivo_rut, mensaje_salida):
-    archivo_rut.save(nombre_archivo_rut)
-    blob_client = blob_service_client.get_blob_client(container = container, blob = nombre_archivo_rut)
-    with open(nombre_archivo_rut, "rb") as data:
-        try:
-            print("Cargando archivo: " + nombre_archivo_rut + " al almacenamiento")
-            blob_client.upload_blob(data, overwrite=True)
-            mensaje_salida["tipo"] = "Correcto"
-            mensaje_salida["mensaje"] = "Archivo guardado con éxito"
-        except Exception as ex:
-            mensaje_salida["tipo"] = "Error"
-            mensaje_salida["mensaje"] = ex
-        finally:
-            os.remove(filename)
-            return mensaje_salida
