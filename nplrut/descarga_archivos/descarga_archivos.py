@@ -20,7 +20,7 @@ def descarga_archivos():
         "tipo": "",
         "mensaje": ""
     }
-    if len(archivos_rut) != 0: 
+    if len(archivos_rut) != 0:
         for archivo_rut in archivos_rut:
             nombre_archivo_rut = secure_filename(archivo_rut.filename)
             mensaje_salida = validaciones_archivo(archivo_rut, mensaje_salida)
@@ -43,4 +43,64 @@ def descarga_archivos_url():
         "tipo": "",
         "mensaje": ""
     }
-    return jsonify(True)
+    mensaje_salida = validaciones_url(url_archivos, mensaje_salida)
+    if mensaje_salida["tipo"] == "Correcto":
+        mensaje_salida = validaciones_seguridad(url_archivos, mensaje_salida)
+        if mensaje_salida["tipo"] == "Correcto":
+            if url_con_archivo(url_archivos):
+                nombre_archivo_rut = ""
+                print("Descargando el archivo: " + nombre_archivo_rut)
+                mensaje_salida = descargar_archivo(url, mensaje_salida)
+            else:
+                print("Descargando archivos de la url: " + url_archivos)
+                mensaje_salida = descarga_archivos_nube(url, mensaje_salida)
+            return jsonify(mensaje_salida)
+        else:
+            return jsonify(mensaje_salida)
+    else:
+        return jsonify(mensaje_salida)
+
+
+def url_con_archivo(url):
+    # validar que en la URL esté el archivo 
+    nombre_archivo_rut = obtener_nombre_archivo_url(url)
+    if nombre_archivo_rut != "":
+        return True
+    else: 
+        return False
+
+
+def obtener_nombre_archivo_url(url):
+    nombre_archivo_rut = ""
+    final_url = nombre_archivo_rut.rsplit('/', 1)
+    try:
+        if final_url.rsplit('.', 1) != "": # tiene una extension
+            nombre_archivo_rut = final_url
+        else:
+            print("La URL no posee el archivo o está mal nombrado")
+    except Exception as ex:
+        print("La URL no posee el archivo, error: " + ex)
+    finally:
+        return nombre_archivo_rut
+
+# Esto solo sirve para URL con el archivo, hay que hacer este método diferente para cada tipo de nube :(
+def descargar_archivo(url, mensaje_salida):
+    print("Descargando archivo")
+    archivo_a_descargar = request.get(url)
+    nombre_archivo_rut = obtener_nombre_archivo_url(url)
+    with open(nombre_archivo_rut, "wb") as archivo_rut:
+        archivo_rut.write(archivo_a_descargar.content)
+        mensaje_salida = validaciones_archivo(archivo_rut, mensaje_salida)
+        if mensaje_salida["tipo"] == "Correcto":
+            print(mensaje_salida["mensaje"])
+            mensaje_salida = carga_archivos_blob(archivo_rut, nombre_archivo_rut, mensaje_salida)
+
+    os.remove(nombre_archivo_rut)
+    return mensaje_salida
+
+# Al igual que el anterior este es dependiente de la nube :(
+def descarga_archivos_nube(url, mensaje_salida):
+    print("Descargando archivos")
+    mensaje_salida = carga_archivos_blob(archivo_rut, nombre_archivo_rut, mensaje_salida)
+    return mensaje_salida
+

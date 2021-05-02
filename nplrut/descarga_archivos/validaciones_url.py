@@ -1,3 +1,5 @@
+import requests
+
 def validaciones_url(url, mensaje_salida):
     if validar_respuesta_url(url):
         mensaje_salida["tipo"] = "Correcto"
@@ -10,4 +12,10 @@ def validaciones_url(url, mensaje_salida):
         
 
 def validar_respuesta_url(url):
-    return True
+    respuesta = requests.get(url)
+
+    if respuesta.status_code == 200:
+        return True
+    else:
+        print(respuesta.status_code)
+        return False

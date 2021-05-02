@@ -39,7 +39,7 @@ def validaciones_archivo(archivo_rut, mensaje_salida):
 
 
 def validar_extension(nombre_archivo_rut):
-    extensiones_permitidas = set(['txt', 'pdf', 'png', 'jpg', 'jpeg'])
+    extensiones_permitidas = set(['pdf', 'png', 'jpg', 'jpeg', 'tiff', 'miltitiff'])
     extension_archivo = nombre_archivo_rut.rsplit('.', 1)
     if extension_archivo in extensiones_permitidas:
         return True
