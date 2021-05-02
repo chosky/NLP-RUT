@@ -12,10 +12,14 @@ def validaciones_url(url, mensaje_salida):
         
 
 def validar_respuesta_url(url):
-    respuesta = requests.get(url)
+    try:
+        respuesta = requests.get(url)
 
-    if respuesta.status_code == 200:
-        return True
-    else:
-        print(respuesta.status_code)
+        if respuesta.status_code == 200:
+            return True
+        else:
+            print(respuesta.status_code)
+            return False
+    except Exception as ex:
+        print(ex)
         return False

@@ -1,8 +1,7 @@
 import os
 from nplrut import cliente_blob_service, container
 
-def carga_archivos_blob(archivo_rut, nombre_archivo_rut, mensaje_salida):
-    archivo_rut.save(nombre_archivo_rut)
+def carga_archivos_blob(nombre_archivo_rut, mensaje_salida):
     blob_client = cliente_blob_service.get_blob_client(container = container, blob = nombre_archivo_rut)
     with open(nombre_archivo_rut, "rb") as data:
         try:
@@ -12,7 +11,6 @@ def carga_archivos_blob(archivo_rut, nombre_archivo_rut, mensaje_salida):
             mensaje_salida["mensaje"] = "Archivo guardado con éxito"
         except Exception as ex:
             mensaje_salida["tipo"] = "Error"
-            mensaje_salida["mensaje"] = ex
+            mensaje_salida["mensaje"] = str(ex)
         finally:
-            os.remove(nombre_archivo_rut)
             return mensaje_salida
