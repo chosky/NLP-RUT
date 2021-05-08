@@ -10,6 +10,7 @@ flasgger==0.9.5
 Flask==1.1.2
 Flask-Cors==3.0.10
 Flask-PyMongo==2.3.0
+gunicorn==20.1.0
 idna==2.10
 isodate==0.6.0
 itsdangerous==1.1.0
