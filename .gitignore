@@ -128,5 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# VisualStudio Code
+.vscode/
+
 # Python Subsistem
 NLP-VE/
+
+# Configurations file
+config.py
