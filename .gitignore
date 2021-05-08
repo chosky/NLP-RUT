@@ -135,4 +135,4 @@ dmypy.json
 NLP-VE/
 
 # Configurations file
-config.py
+#config.py
