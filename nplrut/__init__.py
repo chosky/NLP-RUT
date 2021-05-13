@@ -24,6 +24,11 @@ key = app.config['ACCOUNT_KEY']
 connect_str = app.config['CONNECTION_STRING']
 container = app.config['CONTAINER']
 
+endpoint = app.config['ENDPOINT']
+apim_key = app.config['APIM_KEY']
+model_id = app.config['MODEL_ID']
+API_version = app.config['API_VERSION']
+
 cliente_blob_service = BlobServiceClient.from_connection_string(connect_str)
 
 # Configuración de la base de datos Mongo y su conección
