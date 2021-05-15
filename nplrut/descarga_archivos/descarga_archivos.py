@@ -21,7 +21,7 @@ def descarga_archivos():
         "mensaje": ""
     }
     nombre_archivo_rut = secure_filename(archivo_rut.filename)
-    if nombre_archivo_rut == "":
+    if nombre_archivo_rut != "":
         mensaje_salida = validaciones_archivo(nombre_archivo_rut, mensaje_salida)
         if mensaje_salida["tipo"] == "Correcto":
             print(mensaje_salida["mensaje"])
