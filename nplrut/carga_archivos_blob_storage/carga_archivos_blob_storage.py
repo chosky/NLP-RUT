@@ -8,9 +8,10 @@ def carga_archivos_blob(nombre_archivo_rut, mensaje_salida):
         try:
             print("Cargando archivo: " + nombre_archivo_rut + " al almacenamiento")
             blob_client.upload_blob(data, overwrite=True)
-            analizar_documento(nombre_archivo_rut, nombre_archivo_rut, nombre_archivo_rut.rsplit('.', 1)[1])
+            data = analizar_documento(nombre_archivo_rut, nombre_archivo_rut, nombre_archivo_rut.rsplit('.', 1)[1])
             mensaje_salida["tipo"] = "Correcto"
             mensaje_salida["mensaje"] = "Archivo guardado con éxito"
+            mensaje_salida["data"] = data
         except Exception as ex:
             mensaje_salida["tipo"] = "Error"
             mensaje_salida["mensaje"] = str(ex)

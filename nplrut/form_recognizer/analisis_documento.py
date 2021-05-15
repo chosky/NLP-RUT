@@ -56,6 +56,7 @@ def analizar_documento(input_file, output_file, file_type):
                 if output_file:
                     with open(output_file, 'w') as outfile:
                         json.dump(resp_json, outfile, indent=2, sort_keys=True)
+                    return resp_json["analyzeResult"]["documentResults"][0]
                 print("Analysis succeeded:\n%s" % json.dumps(resp_json, indent=2, sort_keys=True))
                 quit()
             if status == "failed":
