@@ -15,21 +15,20 @@ descarga_archivos_micro_service = Blueprint("descarga_archivos_micro_service", _
 
 @descarga_archivos_micro_service.route('/api/descarga_archivos', methods=['POST'])
 def descarga_archivos():
-    archivos_rut = request.files['archivos_rut']
+    archivo_rut = request.files['archivos_rut']
     mensaje_salida = {
         "tipo": "",
         "mensaje": ""
     }
-    if len(archivos_rut) != 0:
-        for archivo_rut in archivos_rut:
-            nombre_archivo_rut = secure_filename(archivo_rut.filename)
-            mensaje_salida = validaciones_archivo(nombre_archivo_rut, mensaje_salida)
-            if mensaje_salida["tipo"] == "Correcto":
-                print(mensaje_salida["mensaje"])
-                mensaje_salida = carga_archivos_blob(nombre_archivo_rut, mensaje_salida)
-                return jsonify(mensaje_salida)
-            else:
-                return jsonify(mensaje_salida)
+    if archivo_rut == requests.NullHandler:
+        nombre_archivo_rut = secure_filename(archivo_rut.filename)
+        mensaje_salida = validaciones_archivo(nombre_archivo_rut, mensaje_salida)
+        if mensaje_salida["tipo"] == "Correcto":
+            print(mensaje_salida["mensaje"])
+            mensaje_salida = carga_archivos_blob(nombre_archivo_rut, mensaje_salida)
+            return jsonify(mensaje_salida)
+        else:
+            return jsonify(mensaje_salida)
     else:
         mensaje_salida["tipo"] = "Error"
         mensaje_salida["mensaje"] = "No se recivio ningún archivo"
