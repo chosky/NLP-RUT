@@ -19,7 +19,9 @@ jsonschema==3.2.0
 MarkupSafe==1.1.1
 mistune==0.8.4
 msrest==0.6.21
+mysql-connector-python==8.0.24
 oauthlib==3.1.0
+protobuf==3.16.0
 pycparser==2.20
 pymongo==3.11.3
 pyrsistent==0.17.3
