@@ -47,6 +47,7 @@ def validar_extension(nombre_archivo_rut):
 
 
 def validacion_permiso_lectura_archivo(nombre_archivo_rut):
+    return True
     permiso_lectura = os.access(nombre_archivo_rut, os.F_OK)
     if permiso_lectura == True:
         return True
