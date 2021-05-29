@@ -22,13 +22,12 @@ def descarga_archivos():
     }
     nombre_archivo_rut = secure_filename(archivo_rut.filename)
     if nombre_archivo_rut != "":
-        mensaje_salida = validaciones_archivo(nombre_archivo_rut, mensaje_salida)
-        if mensaje_salida["tipo"] == "Correcto":
-            print(mensaje_salida["mensaje"])
-            mensaje_salida = carga_archivos_blob(nombre_archivo_rut, mensaje_salida)
-            return jsonify(mensaje_salida)
-        else:
-            return jsonify(mensaje_salida)
+        with open(nombre_archivo_rut, "w") as archivo_rut:
+            mensaje_salida = validaciones_archivo(nombre_archivo_rut, mensaje_salida)
+            if mensaje_salida["tipo"] == "Correcto":
+                mensaje_salida = carga_archivos_blob(nombre_archivo_rut, mensaje_salida)
+        os.remove(nombre_archivo_rut)
+        return jsonify(mensaje_salida)
     else:
         mensaje_salida["tipo"] = "Error"
         mensaje_salida["mensaje"] = "No se recivio ningún archivo"
